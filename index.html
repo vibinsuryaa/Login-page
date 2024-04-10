@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Display with Dropdown Filter</title>
+<style>
+  /* CSS styling */
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Filter Data</h2>
+  <select id="filterSelect">
+    <option value="all">Show All</option>
+    <option value="name">Filter by Name</option>
+    <option value="category">Filter by Category</option>
+  </select>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Category</th>
+        <th>SubCategory</th>
+        <th>Duration</th>
+        <th>Task</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody">
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // JavaScript code
+  var data = [
+    {
+      name: "suresh",
+      age: "20",
+      sex: "Male",
+      category: "work",
+      SubCategory: "Meeting",
+      Duration: "42",
+      Task: "-"
+    },
+    {
+      name: "vibin",
+      age: "50",
+      sex: "Male",
+      category: "Personal space",
+      SubCategory: "-",
+      Duration: "42",
+      Task: "vty"
+    },
+    {
+      name: "surya",
+      age: "20",
+      sex: "Male",
+      category: "work",
+      SubCategory: "-metting",
+      Duration: "30",
+      Task: "client call"
+    },
+    {
+      name: "xyz",
+      age: "30",
+      sex: "Female",
+      category: "Personal space",
+      SubCategory: "-",
+      Duration: "55",
+      Task: "work"
+    },
+    {
+      name: "abc",
+      age: "40",
+      sex: "Male",
+      category: "work",
+      SubCategory: "-",
+      Duration: "80",
+      Task: "Docummentation"
+    },
+  ];
+
+  var dataBody = document.getElementById("dataBody");
+  data.forEach(obj => {
+    dataBody.innerHTML += `
+      <tr>
+        <td>${obj.name}</td>
+        <td>${obj.age}</td>
+        <td>${obj.sex}</td>
+        <td>${obj.category}</td>
+        <td>${obj.SubCategory}</td>
+        <td>${obj.Duration}</td>
+        <td>${obj.Task}</td>
+      </tr>
+    `;
+  });
+
+  var filterSelect = document.getElementById("filterSelect");
+  var dataTable = document.getElementById("dataTable");
+
+  filterSelect.addEventListener("change", function() {
+    var selectedOption = this.value;
+    var rows = dataTable.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+      var name = row.cells[0].innerText.toLowerCase();
+      var category = row.cells[3].innerText.toLowerCase();
+
+      if (selectedOption === "all") {
+        row.style.display = "";
+      } else if (selectedOption === "name") {
+        row.style.display = name.includes(this.value) ? "" : "none";
+      } else if (selectedOption === "category") {
+        row.style.display = category.includes(this.value) ? "" : "none";
+      }
+    });
+  });
+</script>
+</body>
+</html>

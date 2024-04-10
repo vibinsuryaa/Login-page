@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Management</title>
+<style>
+    /* Styles for Task List */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<div>
+    <h2>Task Management</h2>
+    <label for="nameFilter">Filter by Name:</label>
+    <select id="nameFilter" onchange="filterByName()">
+        <option value="">All</option>
+    </select>
+</div>
+
+<table id="taskTable">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Duration (minutes)</th>
+        <th>Task</th>
+    </tr>
+</table>
+
+<script>
+    var data = [
+        {
+            name: "suresh",
+            age: "20",
+            sex: "Male",
+            category: "work",
+            subCategory: "Meeting",
+            duration: "42",
+            task: "-"
+        },
+        {
+            name: "vibin",
+            age: "50",
+            sex: "Male",
+            category: "Personal space",
+            subCategory: "-",
+            duration: "42",
+            task: "vty"
+        },
+        {
+            name: "surya",
+            age: "20",
+            sex: "Male",
+            category: "work",
+            subCategory: "-metting",
+            duration: "30",
+            task: "client call"
+        },
+        {
+            name: "xyz",
+            age: "30",
+            sex: "Female",
+            category: "Personal space",
+            subCategory: "-",
+            duration: "55",
+            task: "work"
+        },
+        {
+            name: "abc",
+            age: "40",
+            sex: "Male",
+            category: "work",
+            subCategory: "-",
+            duration: "80",
+            task: "Documentation"
+        },
+    ];
+
+    // Populate the dropdown filter by name
+    var nameFilterDropdown = document.getElementById("nameFilter");
+    var uniqueNames = Array.from(new Set(data.map(item => item.name)));
+    uniqueNames.forEach(name => {
+        var option = document.createElement("option");
+        option.text = name;
+        option.value = name;
+        nameFilterDropdown.add(option);
+    });
+
+    // Function to filter tasks by name
+    function filterByName() {
+        var selectedName = nameFilterDropdown.value;
+        var filteredData = data.filter(item => selectedName === "" || item.name === selectedName);
+        updateTaskTable(filteredData);
+    }
+
+    // Function to update the task table
+    function updateTaskTable(tasks) {
+        const taskTable = document.getElementById("taskTable");
+        taskTable.innerHTML = "";
+
+        tasks.forEach(task => {
+            const row = taskTable.insertRow();
+            const nameCell = row.insertCell(0);
+            const ageCell = row.insertCell(1);
+            const sexCell = row.insertCell(2);
+            const categoryCell = row.insertCell(3);
+            const subCategoryCell = row.insertCell(4);
+            const durationCell = row.insertCell(5);
+            const taskCell = row.insertCell(6);
+
+            nameCell.textContent = task.name;
+            ageCell.textContent = task.age;
+            sexCell.textContent = task.sex;
+            categoryCell.textContent = task.category;
+            subCategoryCell.textContent = task.subCategory;
+            durationCell.textContent = task.duration;
+            taskCell.textContent = task.task;
+        });
+    }
+
+    updateTaskTable(data);
+</script>
+
+</body>
+</html>
